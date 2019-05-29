@@ -15,6 +15,14 @@ export const resolvers = {
       const res = Cat.find({ name }).countDocuments().exec();
       const kitty = Cat.deleteMany({ name }).exec();
       return res;
+    },
+    updateCat: (_, { name, newName }) => {
+      const res = Cat.find({ name }).countDocuments().exec();
+      Cat.updateMany(
+        { "name": name },
+        { $set: { "name": newName } }
+      ).exec();
+      return res;
     }
   }
 };

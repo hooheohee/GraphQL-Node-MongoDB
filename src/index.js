@@ -12,12 +12,12 @@ const startServer = async () => {
   });
   server.applyMiddleware({ app });
   await mongoose.connect(
-    "<MongoDB_URL>",
+    "<MongoDB Connection String>",
     { useNewUrlParser: true }
   );
 
   app.listen({ port: 4000 }, () =>
-    console.log(`Server ready at http://localhost:4000/graphql`)
+    console.log("\n"+`Server ready at http://localhost:4000/graphql`)
   );
 };
 
