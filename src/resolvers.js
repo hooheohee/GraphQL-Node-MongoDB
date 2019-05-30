@@ -3,7 +3,12 @@ import { Cat } from "./models/Cat";
 export const resolvers = {
   Query: {
     hello: () => "hi",
-    cats: () => Cat.find()
+    cats: () => Cat.find(),
+    cat: (_, {name}) => {
+      return Cat.find({ name }).exec().then((res)=>{
+        return res;
+      });
+    }
   },
   Mutation: {
     createCat: async (_, { name }) => {
@@ -12,17 +17,20 @@ export const resolvers = {
       return kitty;
     },
     deleteCat: (_, { name }) => {
-      const res = Cat.find({ name }).countDocuments().exec();
-      const kitty = Cat.deleteMany({ name }).exec();
-      return res;
+      var p = Cat.find({ name }).exec();
+      Cat.deleteMany({ name }).exec();
+      return p.then((res)=>{
+        return res;
+      })
     },
     updateCat: (_, { name, newName }) => {
-      const res = Cat.find({ name }).countDocuments().exec();
       Cat.updateMany(
         { "name": name },
         { $set: { "name": newName } }
       ).exec();
-      return res;
+      return Cat.find({name}).exec().then((res)=>{
+        return res;
+      });
     }
   }
 };

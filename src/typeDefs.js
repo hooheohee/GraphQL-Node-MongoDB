@@ -4,6 +4,7 @@ export const typeDefs = gql`
   type Query {
     hello: String!
     cats: [Cat!]!
+    cat(name: String!): [Cat!]!
   }
 
   type Cat {
@@ -13,7 +14,7 @@ export const typeDefs = gql`
 
   type Mutation {
     createCat(name: String!): Cat!
-    deleteCat(name: String!): Int!
-    updateCat(name: String!, newName: String!): Int!
+    deleteCat(name: String!): [Cat!]!
+    updateCat(name: String!, newName: String!): [Cat!]!
   }
 `;
