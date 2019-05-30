@@ -1,6 +1,6 @@
 # GraphQL-Node-Mongodb
 
-This is a test GraphQL server created with MongoDB and Node.js.  
+This is a GraphQL server created with MongoDB and Node.js.  
 The actual database URL has been removed for obvious reasons. Before starting the app, add your database URL in src/index.js.
 
 # Start
