@@ -4,10 +4,11 @@ export const resolvers = {
   Query: {
     hello: () => "hi",
     cats: () => Cat.find(),
-    cat: (_, {name}) => {
-      return Cat.find({ name }).exec().then((res)=>{
-        return res;
-      });
+    cat: async (_, { name }) => {
+      const res = await Cat.find({ name })
+        .exec()
+        .catch(e => console.log(e));
+      return res;
     }
   },
   Mutation: {
@@ -17,20 +18,20 @@ export const resolvers = {
       return kitty;
     },
     deleteCat: (_, { name }) => {
-      var p = Cat.find({ name }).exec();
-      Cat.deleteMany({ name }).exec();
-      return p.then((res)=>{
-        return res;
-      })
+      return Cat.deleteMany({ name })
+        .exec()
+        .then(res => {
+          return res.deletedCount + " record(s) deleted.";
+        })
+        .catch(e => console.log(e));
     },
     updateCat: (_, { name, newName }) => {
-      Cat.updateMany(
-        { "name": name },
-        { $set: { "name": newName } }
-      ).exec();
-      return Cat.find({name}).exec().then((res)=>{
-        return res;
-      });
+      return Cat.updateMany({ name: name }, { $set: { name: newName } })
+        .exec()
+        .then(e => {
+          return e.nModified + " record(s) modified.";
+        })
+        .catch(e => console.log(e));
     }
   }
 };
